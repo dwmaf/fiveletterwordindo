@@ -1,73 +1,6 @@
 <template>
     <div class="w-full">
-        <div
-            class="mb-6 p-1 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-[2rem] shadow-xl shadow-teal-500/20 group overflow-hidden relative">
-            <div
-                class="bg-white dark:bg-slate-900 rounded-[1.8rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div
-                    class="absolute -right-10 -top-10 w-40 h-40 bg-teal-500/5 dark:bg-teal-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700">
-                </div>
 
-                <div class="flex items-center gap-6 relative z-10">
-                    <div
-                        class=" hidden md:flex w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl items-center justify-center text-3xl shadow-inner border border-slate-200/50 dark:border-slate-700/50">
-                        🇬🇧
-                    </div>
-                    <div class="text-center md:text-left">
-                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
-                            <span
-                                class="bg-teal-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">New
-                                Feature</span>
-                            <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">Playing Wordle in
-                                English?</h2>
-                        </div>
-                        <p class="text-slate-500 dark:text-slate-400 font-medium max-w-md">
-                            We've just launched the English version! Solve Wordle (NYT) easily. You can now filter
-                            results to show only words that haven't been used as answers yet!.
-                        </p>
-                    </div>
-                </div>
-
-                <NuxtLink to="/wordle-solver"
-                    class="relative z-10 w-full md:w-auto px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg text-center">
-                    Switch to English Solver
-                </NuxtLink>
-            </div>
-        </div>
-
-        <div
-            class="mb-10 p-1 bg-gradient-to-r from-indigo-500 via-indigo-500 to-blue-500 rounded-[2rem] shadow-xl shadow-indigo-500/20 group overflow-hidden relative">
-            <div
-                class="bg-white dark:bg-slate-900 rounded-[1.8rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div
-                    class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700">
-                </div>
-
-                <div class="flex items-center gap-6 relative z-10">
-                    <div
-                        class=" hidden md:flex w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl items-center justify-center text-3xl shadow-inner border border-slate-200/50 dark:border-slate-700/50">
-                        🇮🇩
-                    </div>
-                    <div class="text-center md:text-left">
-                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
-                            <span
-                                class="bg-indigo-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">Katla</span>
-                            <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">Main Katla
-                                Indonesia?</h2>
-                        </div>
-                        <p class="text-slate-500 dark:text-slate-400 font-medium max-w-md">
-                            Butuh bantuan menebak Katla hari ini? Gunakan solver khusus dengan wordlist Katla yang
-                            lebih lengkap dan akurat.
-                        </p>
-                    </div>
-                </div>
-
-                <NuxtLink to="/katla-solver"
-                    class="relative z-10 w-full md:w-auto px-8 py-4 bg-indigo-600 text-white font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg text-center">
-                    Buka Katla Solver
-                </NuxtLink>
-            </div>
-        </div>
 
         <div class="flex flex-col md:flex-row gap-6 mb-8 w-full items-start">
             <div id="input"
@@ -99,6 +32,27 @@
                             (Abu-abu)</label>
                         <input v-model="gray" placeholder="Contoh: bxyz"
                             class="h-12 w-full p-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-700 rounded-xl focus:border-slate-400 dark:focus:border-slate-500 focus:ring-4 focus:ring-slate-400/10 outline-none uppercase tracking-widest transition-all" />
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <label class="flex items-center cursor-pointer group">
+                            <div class="relative">
+                                <input type="checkbox" v-model="onlyPossibleAnswers" class="sr-only">
+                                <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full shadow-inner transition-colors group-hover:bg-slate-300 dark:group-hover:bg-slate-600"
+                                    :class="{ 'bg-teal-500 dark:bg-teal-600': onlyPossibleAnswers }"></div>
+                                <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform"
+                                    :class="{ 'translate-x-4': onlyPossibleAnswers }"></div>
+                            </div>
+                            <div class="ml-3">
+                                <div class="text-sm font-bold text-slate-700 dark:text-slate-200">Hanya Kemungkinan
+                                    Jawaban
+                                </div>
+                                <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">Saring kata
+                                    yang bukan kemungkinan jawaban tapi boleh ditebak
+                                    <span class="text-[9px] opacity-70 ml-1">(Last updated: 29 Dec 2025)</span>
+                                </div>
+                            </div>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -142,7 +96,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import words from '~/assets/data/wordlist.json'
+import words from '~/assets/data/katla-possible-answer-wordlist.json'
+import allowedguest from '~/assets/data/katla-allowed-guest-wordlist.json'
+
+const onlyPossibleAnswers = ref(false)
 
 const green = ref(['', '', '', '', ''])
 const yellow = ref('')
@@ -170,7 +127,9 @@ const handleBackspace = (index, event) => {
 }
 
 const filteredWords = computed(() => {
-    return words.filter(word => {
+    const baseWords = onlyPossibleAnswers.value ? words : [...new Set([...words, ...allowedguest])]
+
+    return baseWords.filter(word => {
         const w = word.toLowerCase()
 
         for (let i = 0; i < 5; i++) {
@@ -188,9 +147,9 @@ const filteredWords = computed(() => {
 })
 
 useSeoMeta({
-    title: 'Indonesian Wordle Solver',
-    description: 'Bantu pecahkan teka-teki Wordle bahasa Indonesia (umum) secara instan. Filter kata 5 huruf berdasarkan posisi dan ketersediaan huruf.',
-    ogTitle: 'Indonesian Wordle Solver - Five Letter Word Indo',
-    ogDescription: 'Temukan kata 5 huruf bahasa Indonesia dengan mudah untuk Wordle.',
+    title: 'Katla Solver',
+    description: 'Solver khusus Katla (Wordle Indonesia). Dilengkapi wordlist Katla untuk membantu kamu menemukan jawaban hari ini.',
+    ogTitle: 'Katla Indonesia Solver - Five Letter Word Indo',
+    ogDescription: 'Temukan jawaban Katla hari ini dengan mudah menggunakan solver akurat kami.',
 })
 </script>

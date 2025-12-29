@@ -5,10 +5,10 @@
       <div class="flex-grow container mx-auto px-2">
         <header class="flex justify-between items-center mb-10 py-4">
           <div class="text-left">
-            <NuxtLink to="/">
+            <NuxtLink :to="homeLink">
               <h1
                 class="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent tracking-tighter">
-                5 Letter Word Indo Finder
+                {{ pageTitle }}
               </h1>
             </NuxtLink>
           </div>
@@ -55,6 +55,16 @@
                   Home</NuxtLink>
               </li>
               <li>
+                <NuxtLink to="/wordle-solver"
+                  class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
+                  Wordle Solver (EN)</NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/katla-solver"
+                  class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
+                  Katla Solver (ID)</NuxtLink>
+              </li>
+              <li>
                 <NuxtLink to="/about"
                   class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
                   About Us</NuxtLink>
@@ -83,9 +93,18 @@
 
         <div
           class="max-w-7xl mx-auto pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-          <p class="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">
+          <p class="text-sm font-bold text-slate-400 dark:text-slate-500">
             &copy; {{ new Date().getFullYear() }} Word Indo Finder. All rights reserved.
           </p>
+          <div class="flex items-center gap-2 opacity-80">
+            <span class="text-[10px] uppercase tracking-widest font-black text-slate-400 dark:text-slate-500">Built
+              with</span>
+            <div
+              class="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+              <img src="/favicon.ico" class="w-4 h-4" alt="Nuxt Logo" />
+              <span class="text-xs font-black text-slate-700 dark:text-slate-300">Nuxt</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
@@ -93,7 +112,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const pageTitle = computed(() => {
+  if (route.path === '/wordle-solver') {
+    return 'Wordle Solver'
+  }
+  if (route.path === '/katla-solver') {
+    return 'Katla Indonesia Solver'
+  }
+  return '5 Letter Word Indo Finder'
+})
+
+const homeLink = computed(() => {
+  if (route.path === '/wordle-solver') {
+    return '/wordle-solver'
+  }
+  if (route.path === '/katla-solver') {
+    return '/katla-solver'
+  }
+  return '/'
+})
 
 const isDark = ref(true)
 

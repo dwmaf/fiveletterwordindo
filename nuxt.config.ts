@@ -8,11 +8,14 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: '5 Letter Word Indo Finder',
-      titleTemplate: '%s | 5 Letter Word Indo Finder',
+      titleTemplate: '%s | Five Letter Word Indo',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Temukan kata 5 huruf bahasa Indonesia dengan mudah untuk Wordle.' }
+        { name: 'description', content: 'Solver cerdas dan cepat untuk Wordle (NYT) dan Katla Indonesia. Temukan kata 5 huruf dengan mudah menggunakan filter warna.' },
+        { name: 'keywords', content: 'wordle solver, katla solver, jawaban katla hari ini, tebak kata 5 huruf, wordle indonesia helper' },
+        { name: 'author', content: 'Five Letter Word Indo' },
+        { property: 'og:type', content: 'website' },
       ],
       link: [
         {
