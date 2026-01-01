@@ -1,9 +1,9 @@
 <template>
-    <div class="max-w-4xl mx-auto py-12 px-4">
+    <div class="max-w-4xl mx-auto py-8 md:px-4">
         <div
-            class="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-16 shadow-xl border border-slate-200 dark:border-slate-800">
+            class="bg-white dark:bg-slate-900 rounded-[2rem] p-4 md:p-16 shadow-xl border border-slate-200 dark:border-slate-800">
             <h1
-                class="text-4xl font-black mb-8 bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                class="text-3xl md:text-4xl font-black mb-8 bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
                 About Us
             </h1>
 

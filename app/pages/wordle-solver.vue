@@ -1,143 +1,116 @@
 <template>
     <div class="flex flex-col md:flex-row gap-6 mb-8 w-full items-start">
-        <div id="input"
-            class="w-full md:w-[320px] shrink-0 bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800">
-            <div class="space-y-8">
-                <div>
-                    <label class="block text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-4 ml-1">Correct
-                        Position
-                        (Green)</label>
-                    <div class="flex gap-2 justify-center">
-                        <input v-for="i in 5" :key="i" v-model="green[i - 1]" ref="greenInputs"
-                            @input="handleInput(i - 1, $event)" @keydown.backspace="handleBackspace(i - 1, $event)"
-                            @mousedown="green[i - 1] = ''" @keyup.tab="green[i - 1] = ''"
-                            class="w-full aspect-square text-center text-xl font-black bg-slate-50 dark:bg-slate-800/50 border-2 border-emerald-500/30 dark:border-emerald-500/20 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none uppercase transition-all caret-transparent"
-                            type="text" />
+        <SolverCard>
+            <template #action>
+                <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank"
+                    class="flex items-center justify-center gap-2 w-full mb-8 py-3 bg-teal-600 dark:bg-teal-500 text-white hover:bg-teal-700 dark:hover:bg-teal-400 rounded-xl font-bold transition-all text-sm group shadow-lg shadow-teal-500/20 mb-8">
+                    <img src="~/assets/img/wordle-icon.webp" class="w-5 h-5 rounded-sm" alt="Wordle Icon">
+                    <span>Play Wordle (NYT)</span>
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+            </template>
+            <GreenTileInput v-model="green" label="Posisi Benar (Hijau)" />
+            <BaseInput v-model="yellow" label="Ada, Tapi Posisi Salah (Kuning)" placeholder="Contoh: am"
+                color="amber" />
+            <BaseInput v-model="gray" label="Tidak Ada (Abu-abu)" placeholder="Contoh: bxyz" color="slate" />
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                <label class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" v-model="excludePastAnswers" class="sr-only">
+                        <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full shadow-inner transition-colors "
+                            :class="{ 'bg-teal-500 dark:bg-teal-600': excludePastAnswers }"></div>
+                        <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform"
+                            :class="{ 'translate-x-4': excludePastAnswers }"></div>
                     </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold text-amber-600 dark:text-amber-400 mb-3 ml-1">Exist, just
-                        wrong position (yellow)</label>
-                    <input v-model="yellow" placeholder="Example: am"
-                        class="h-12 w-full p-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-amber-500/30 dark:border-amber-500/20 rounded-xl focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 outline-none uppercase tracking-widest transition-all" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-3 ml-1">Doesn't exist
-                        (Grey)</label>
-                    <input v-model="gray" placeholder="Example: bxyz"
-                        class="h-12 w-full p-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-300 dark:border-slate-700 rounded-xl focus:border-slate-400 dark:focus:border-slate-500 focus:ring-4 focus:ring-slate-400/10 outline-none uppercase tracking-widest transition-all" />
-                </div>
-
-                <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <label class="flex items-center cursor-pointer group">
-                        <div class="relative">
-                            <input type="checkbox" v-model="excludePastAnswers" class="sr-only">
-                            <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full shadow-inner transition-colors group-hover:bg-slate-300 dark:group-hover:bg-slate-600"
-                                :class="{ 'bg-teal-500 dark:bg-teal-600': excludePastAnswers }"></div>
-                            <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform"
-                                :class="{ 'translate-x-4': excludePastAnswers }"></div>
+                    <div class="ml-3">
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-200">Exclude Past Answers</div>
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">NYT wordle answer
+                            list
+                            <span class="text-[9px] opacity-70 ml-1">(Last updated: {{ lastUpdated }})</span>
                         </div>
-                        <div class="ml-3">
-                            <div class="text-sm font-bold text-slate-700 dark:text-slate-200">Exclude Past Answers</div>
-                            <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">NYT wordle answer
-                                list
-                                <span class="text-[9px] opacity-70 ml-1">(Last updated: 29 Dec 2025)</span>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div id="hasil"
-            class="flex-1 w-full bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 self-stretch">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-xl font-bold flex items-center gap-2">
-                    <span>Result</span>
-                    <span class="animate-pulse w-2 h-2 rounded-full bg-teal-500"></span>
-                </h2>
-                <span
-                    class="bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 text-xs font-black px-4 py-2 rounded-full border border-teal-200 dark:border-teal-800 tracking-wider transition-all">
-                    {{ filteredWords.length }} words
-                </span>
-            </div>
-
-            <div v-if="filteredWords.length > 0">
-                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-                    <div v-for="word in filteredWords.slice(0, 100)" :key="word"
-                        class="bg-slate-50 dark:bg-slate-800/30 p-3 text-center rounded-xl border border-slate-100 dark:border-slate-800 hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-lg hover:-translate-y-0.5 transition-all uppercase font-mono font-bold text-slate-700 dark:text-slate-300">
-                        {{ word }}
                     </div>
-                </div>
-                <p v-if="filteredWords.length > 100"
-                    class="text-center text-xs font-medium text-slate-400 dark:text-slate-600 mt-10 tracking-widest border-t border-slate-100 dark:border-slate-800 pt-6">
-                    Display first 100 words
-                </p>
+                </label>
             </div>
+        </SolverCard>
 
-            <div v-else class="flex flex-col items-center justify-center py-24 text-center">
-                <div class="text-6xl mb-6 grayscale hover:grayscale-0 transition-all cursor-default">😅</div>
-                <p class="text-slate-500 dark:text-slate-400 font-bold text-lg">No matching words found</p>
-                <p class="text-slate-400 dark:text-slate-500 text-sm mt-2">Try reducing filters or check your input
-                    again.</p>
-            </div>
-        </div>
+        <WordResult :words="filteredWords" />
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import words from '~/assets/data/wordle-wordlist.json'
-import pastanswers from '~/assets/data/wordle-past-answers.json'
+import localPastAnswers from '~/assets/data/wordle-past-answers.json'
+import SolverCard from '~/components/SolverCard.vue'
+import GreenTileInput from '~/components/GreenTileInput.vue'
+import WordResult from '~/components/WordResult.vue'
+import BaseInput from '~/components/BaseInput.vue'
+
+const EXTERNAL_DATA_URL = 'https://xwnmsmhdujqzcirafmdz.supabase.co/rest/v1/past-answers?select=word,date&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3bm1zbWhkdWpxemNpcmFmbWR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcyMDMxMjksImV4cCI6MjA4Mjc3OTEyOX0.-Stmv-yhGIxym6Ok7Tkp_7_naL_AJs6cixvVPhLwDCo'
+
+const { data: fetchResult } = await useAsyncData('past-answers', async () => {
+    if (!EXTERNAL_DATA_URL) return null
+    try {
+        const response = await $fetch(EXTERNAL_DATA_URL)
+
+        if (Array.isArray(response) && response.length > 0 && typeof response[0] === 'object') {
+            const words = response.map(item => {
+                const w = item.word || item.answer || Object.values(item)[0]
+                return typeof w === 'string' ? w.trim().toLowerCase() : w
+            })
+
+            let latestDate = null
+            if (response.some(item => item.date)) {
+                const dates = response
+                    .map(item => item.date)
+                    .filter(d => d)
+                    .sort()
+
+                const lastDateStr = dates[dates.length - 1]
+                if (lastDateStr) {
+                    latestDate = new Date(lastDateStr).toLocaleDateString('en-GB', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                    })
+                }
+            }
+
+            return { words, latestDate }
+        }
+
+        if (Array.isArray(response)) {
+            return { words: response, latestDate: null }
+        }
+
+        return null
+    } catch (error) {
+        console.error('Failed to fetch past answers:', error)
+        return null
+    }
+})
+
+const pastanswers = computed(() => {
+    const external = fetchResult.value?.words || []
+    if (external.length === 0) return localPastAnswers
+
+    return [...new Set([...localPastAnswers, ...external])]
+})
+
+const lastUpdated = computed(() => fetchResult.value?.latestDate || '29 Dec 2025')
 
 const excludePastAnswers = ref(false)
 
 const green = ref(['', '', '', '', ''])
 const yellow = ref('')
 const gray = ref('')
-const greenInputs = ref([])
 
-const handleInput = (index, event) => {
-    const val = event.target.value
-    if (val) {
-        // Take only the last character (to support replacement)
-        green.value[index] = val.slice(-1).toUpperCase()
-
-        // Move to the next column
-        if (index < 4) {
-            greenInputs.value[index + 1].focus()
-        }
+const { filteredWords } = useWordFilter(
+    computed(() => words),
+    { green, yellow, gray },
+    {
+        shouldExclude: excludePastAnswers,
+        excludeList: pastanswers
     }
-}
-
-const handleBackspace = (index, event) => {
-    // If the column is empty and not the first column, move to the previous column on backspace
-    if (!green.value[index] && index > 0) {
-        greenInputs.value[index - 1].focus()
-    }
-}
-
-const filteredWords = computed(() => {
-    return words.filter(word => {
-        const w = word.toLowerCase()
-
-        for (let i = 0; i < 5; i++) {
-            if (green.value[i] && w[i] !== green.value[i].toLowerCase()) return false
-        }
-
-        const yellowChars = yellow.value.toLowerCase().split('').filter(c => c.trim())
-        if (!yellowChars.every(char => w.includes(char))) return false
-
-        const grayChars = gray.value.toLowerCase().split('').filter(c => c.trim())
-        if (grayChars.some(char => w.includes(char))) return false
-
-        if (excludePastAnswers.value && pastanswers.includes(w)) return false
-
-        return true
-    })
-})
+)
 
 useSeoMeta({
     title: 'Wordle Solver',
