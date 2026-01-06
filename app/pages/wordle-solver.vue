@@ -13,7 +13,23 @@
             <BaseInput v-model="yellow" label="Ada, Tapi Posisi Salah (Kuning)" placeholder="Contoh: am"
                 color="amber" />
             <BaseInput v-model="gray" label="Tidak Ada (Abu-abu)" placeholder="Contoh: bxyz" color="slate" />
-            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                <label class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" v-model="useWordleOnly" class="sr-only">
+                        <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full shadow-inner transition-colors "
+                            :class="{ 'bg-teal-500 dark:bg-teal-600': useWordleOnly }"></div>
+                        <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform"
+                            :class="{ 'translate-x-4': useWordleOnly }"></div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-bold text-slate-700 dark:text-slate-200">Wordle Answers Only</div>
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+                            Only show words from the Wordle answer list
+                        </div>
+                    </div>
+                </label>
+
                 <label class="flex items-center cursor-pointer group">
                     <div class="relative">
                         <input type="checkbox" v-model="excludePastAnswers" class="sr-only">
@@ -24,8 +40,7 @@
                     </div>
                     <div class="ml-3">
                         <div class="text-sm font-bold text-slate-700 dark:text-slate-200">Exclude Past Answers</div>
-                        <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">NYT wordle answer
-                            list
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">NYT wordle past answers
                             <span class="text-[9px] opacity-70 ml-1">(Last updated: {{ lastUpdated }})</span>
                         </div>
                     </div>
@@ -39,7 +54,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import words from '~/assets/data/wordle-wordlist.json'
+import wordleWords from '~/assets/data/wordle-wordlist.json'
+import allowedWords from '~/assets/data/wordlist-allowed-list.json'
 import localPastAnswers from '~/assets/data/wordle-past-answers.json'
 import SolverCard from '~/components/SolverCard.vue'
 import GreenTileInput from '~/components/GreenTileInput.vue'
@@ -97,14 +113,17 @@ const pastanswers = computed(() => {
 
 const lastUpdated = computed(() => fetchResult.value?.latestDate || '29 Dec 2025')
 
+const useWordleOnly = ref(false)
 const excludePastAnswers = ref(false)
+
+const words = computed(() => useWordleOnly.value ? wordleWords : allowedWords)
 
 const green = ref(['', '', '', '', ''])
 const yellow = ref('')
 const gray = ref('')
 
 const { filteredWords } = useWordFilter(
-    computed(() => words),
+    words,
     { green, yellow, gray },
     {
         shouldExclude: excludePastAnswers,

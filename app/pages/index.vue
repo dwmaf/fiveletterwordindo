@@ -89,7 +89,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import words from '~/assets/data/wordlist.json'
+import words from '~/assets/data/indo-wordlist.json'
 import SolverCard from '~/components/SolverCard.vue'
 import GreenTileInput from '~/components/GreenTileInput.vue'
 import WordResult from '~/components/WordResult.vue'
