@@ -62,7 +62,7 @@ import GreenTileInput from '~/components/GreenTileInput.vue'
 import WordResult from '~/components/WordResult.vue'
 import BaseInput from '~/components/BaseInput.vue'
 
-const EXTERNAL_DATA_URL = 'https://xwnmsmhdujqzcirafmdz.supabase.co/rest/v1/past-answers?select=word,date&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3bm1zbWhkdWpxemNpcmFmbWR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcyMDMxMjksImV4cCI6MjA4Mjc3OTEyOX0.-Stmv-yhGIxym6Ok7Tkp_7_naL_AJs6cixvVPhLwDCo'
+const EXTERNAL_DATA_URL = 'sengaja aku hide pas upload ke kamu biar aman'
 
 const { data: fetchResult } = await useAsyncData('past-answers', async () => {
     if (!EXTERNAL_DATA_URL) return null
@@ -102,9 +102,6 @@ const { data: fetchResult } = await useAsyncData('past-answers', async () => {
         console.error('Failed to fetch past answers:', error)
         return null
     }
-}, {
-    server: false,
-    lazy: true
 })
 
 const pastanswers = computed(() => {
@@ -114,10 +111,7 @@ const pastanswers = computed(() => {
     return [...new Set([...localPastAnswers, ...external])]
 })
 
-const lastUpdated = computed(() => {
-    if (!fetchResult.value) return 'Loading data...'
-    return fetchResult.value?.latestDate || '29 Dec 2025'
-})
+const lastUpdated = computed(() => fetchResult.value?.latestDate || '29 Dec 2025')
 
 const useWordleOnly = ref(false)
 const excludePastAnswers = ref(false)
