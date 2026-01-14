@@ -67,7 +67,12 @@ const EXTERNAL_DATA_URL = 'https://xwnmsmhdujqzcirafmdz.supabase.co/rest/v1/past
 const { data: fetchResult } = await useAsyncData('past-answers', async () => {
     if (!EXTERNAL_DATA_URL) return null
     try {
-        const response = await $fetch(EXTERNAL_DATA_URL)
+        const response = await $fetch(EXTERNAL_DATA_URL, {
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        })
 
         if (Array.isArray(response) && response.length > 0 && typeof response[0] === 'object') {
             const words = response.map(item => {
