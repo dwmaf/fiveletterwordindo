@@ -1,8 +1,8 @@
 <template>
     <div class="max-w-4xl mx-auto py-8 md:px-4">
         <div
-            class="bg-white dark:bg-slate-900 rounded-[2rem] p-4 md:p-16 shadow-xl border border-slate-200 dark:border-slate-800">
-            <h1 class="text-3xl md:text-4xl font-black mb-8 bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+            class="bg-white dark:bg-slate-900 rounded-4xl p-4 md:p-16 shadow-xl border border-slate-200 dark:border-slate-800">
+            <h1 class="text-3xl md:text-4xl font-black mb-8 bg-linear-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
                 Terms of Service
             </h1>
 
