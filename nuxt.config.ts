@@ -4,6 +4,15 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  modules: [
+    '@nuxtjs/supabase'
+  ],
+  // Konfigurasi Supabase
+  supabase: {
+    // Kita set false agar modul ini TIDAK otomatis me-redirect user.
+    // Kita ingin kontrol penuh redirect lewat middleware/auth.ts yang tadi kamu buat.
+    redirect: false,
+  },
   css: ['~/assets/css/main.css'],
   app: {
     head: {

@@ -2,9 +2,9 @@
   <div :class="{ 'dark': isDark }">
     <div
       class="min-h-screen transition-colors duration-300 bg-slate-200 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-2 font-sans flex flex-col">
-      <div class="flex-grow container mx-auto px-2">
-        <header class="flex justify-between items-start mb-5 sm:mb-10 py-4 gap-4">
-          <div class="text-left max-w-[300px]">
+      <div class="grow container mx-auto px-2">
+        <header v-if="!isLoginPage" class="flex justify-between items-start mb-5 sm:mb-10 py-4 gap-4">
+          <div class="text-left max-w-75">
             <NuxtLink :to="homeLink" class="block">
               <WordleTitle :text="pageTitle" />
             </NuxtLink>
@@ -41,7 +41,7 @@
           </button>
         </header>
 
-        <button @click="toggleTheme"
+        <button v-if="!isLoginPage" @click="toggleTheme"
           class="flex min-[376px]:hidden ml-auto mb-5 p-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-110 active:scale-95 transition-all outline-none"
           :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
           <span v-if="isDark" class="text-xl">☀️</span>
@@ -53,15 +53,15 @@
         </main>
       </div>
 
-      <footer
+      <footer v-if="!isLoginPage"
         class="mt-12 bg-white dark:bg-slate-900 rounded-t-[3rem] border-t border-slate-200 dark:border-slate-800 p-8 md:p-12 overflow-hidden relative">
         <div
-          class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent">
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-linear-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent">
         </div>
 
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div class="space-y-4">
-            <div class="max-w-[300px]">
+            <div class="max-w-75">
               <WordleTitle text="5 Letter Word Indo Finder" />
             </div>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -148,6 +148,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+
+const isLoginPage = computed(() => route.path === '/login')
 
 const pageTitle = computed(() => {
   if (route.path === '/wordle-solver') {
