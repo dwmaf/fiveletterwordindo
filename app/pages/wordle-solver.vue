@@ -62,17 +62,15 @@ import GreenTileInput from '~/components/GreenTileInput.vue'
 import WordResult from '~/components/WordResult.vue'
 import BaseInput from '~/components/BaseInput.vue'
 
-const EXTERNAL_DATA_URL = 'https://xwnmsmhdujqzcirafmdz.supabase.co/rest/v1/past-answers?select=word,date&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3bm1zbWhkdWpxemNpcmFmbWR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcyMDMxMjksImV4cCI6MjA4Mjc3OTEyOX0.-Stmv-yhGIxym6Ok7Tkp_7_naL_AJs6cixvVPhLwDCo'
+const supabase = useSupabaseClient()
 
 const { data: fetchResult } = await useAsyncData('past-answers', async () => {
-    if (!EXTERNAL_DATA_URL) return null
     try {
-        const response = await $fetch(EXTERNAL_DATA_URL, {
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
-            }
-        })
+        const { data: response, error } = await supabase
+            .from('past-answers')
+            .select('word, date')
+
+        if (error) throw error
 
         if (Array.isArray(response) && response.length > 0 && typeof response[0] === 'object') {
             const words = response.map(item => {
