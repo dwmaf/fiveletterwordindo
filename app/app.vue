@@ -3,7 +3,7 @@
     <div
       class="min-h-screen transition-colors duration-300 bg-slate-200 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-2 font-sans flex flex-col">
       <div class="grow container mx-auto px-2">
-        <header v-if="!isLoginPage" class="flex justify-between items-start mb-5 sm:mb-10 py-4 gap-4">
+        <header class="flex justify-between items-start mb-5 sm:mb-10 py-4 gap-4">
           <div class="text-left max-w-75">
             <NuxtLink :to="homeLink" class="block">
               <WordleTitle :text="pageTitle" />
@@ -13,39 +13,32 @@
               <NuxtLink to="/"
                 class="text-[10px] uppercase tracking-[0.2em] font-black transition-all hover:text-teal-500"
                 :class="route.path === '/' ? 'text-teal-500' : 'text-slate-400 dark:text-slate-500'">
-                Home
-              </NuxtLink>
-              <NuxtLink to="/wordle-solver"
-                class="text-[10px] uppercase tracking-[0.2em] font-black transition-all hover:text-teal-500"
-                :class="route.path === '/wordle-solver' ? 'text-teal-500' : 'text-slate-400 dark:text-slate-500'">
-                Wordle
-              </NuxtLink>
-              <NuxtLink to="/katla-id-solver"
-                class="text-[10px] uppercase tracking-[0.2em] font-black transition-all hover:text-teal-500"
-                :class="route.path === '/katla-id-solver' ? 'text-teal-500' : 'text-slate-400 dark:text-slate-500'">
-                Katla ID
-              </NuxtLink>
-              <NuxtLink to="/katla-indonesia-solver"
-                class="text-[10px] uppercase tracking-[0.2em] font-black transition-all hover:text-teal-500"
-                :class="route.path === '/katla-indonesia-solver' ? 'text-teal-500' : 'text-slate-400 dark:text-slate-500'">
-                Katla Indo
+                Wordle Solver
               </NuxtLink>
             </nav>
           </div>
 
           <button @click="toggleTheme"
-            class="hidden min-[376px]:block shrink-0 p-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-110 active:scale-95 transition-all outline-none"
+            class="hidden min-[376px]:block shrink-0 p-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-100 active:scale-95 transition-all outline-none"
             :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-            <span v-if="isDark" class="text-xl">☀️</span>
-            <span v-else class="text-xl">🌙</span>
+            <span v-if="isDark">
+              <Icon name="moon-mono" width="2em" height="2em" color="#cbd5e1" />
+            </span>
+            <span v-else>
+              <Icon name="sunrise" width="2em" height="2em" color="orange" />
+            </span>
           </button>
         </header>
 
-        <button v-if="!isLoginPage" @click="toggleTheme"
-          class="flex min-[376px]:hidden ml-auto mb-5 p-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-110 active:scale-95 transition-all outline-none"
+        <button @click="toggleTheme"
+          class="flex min-[376px]:hidden ml-auto mb-5 p-3 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-100 active:scale-95 transition-all outline-none"
           :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-          <span v-if="isDark" class="text-xl">☀️</span>
-          <span v-else class="text-xl">🌙</span>
+          <span v-if="isDark">
+            <Icon name="moon-mono" width="2em" height="2em" color="#cbd5e1" />
+          </span>
+          <span v-else>
+            <Icon name="sunrise" width="2em" height="2em" color="orange" />
+          </span>
         </button>
 
         <main>
@@ -53,7 +46,7 @@
         </main>
       </div>
 
-      <footer v-if="!isLoginPage"
+      <footer
         class="mt-12 bg-white dark:bg-slate-900 rounded-t-[3rem] border-t border-slate-200 dark:border-slate-800 p-8 md:p-12 overflow-hidden relative">
         <div
           class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-linear-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent">
@@ -62,10 +55,10 @@
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div class="space-y-4">
             <div class="max-w-75">
-              <WordleTitle text="5 Letter Word Indo Finder" />
+              <WordleTitle text="Wordle Solver" />
             </div>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-              Asisten cerdas untuk memenangkan permainan Wordle Inggris & Indonesia (Katla). Temukan kata yang tepat
+              Asisten cerdas untuk memenangkan permainan Wordle Inggris. Temukan kata yang tepat
               dalam hitungan
               detik.
             </p>
@@ -79,22 +72,7 @@
               <li>
                 <NuxtLink to="/"
                   class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
-                  Home</NuxtLink>
-              </li>
-              <li>
-                <NuxtLink to="/wordle-solver"
-                  class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
                   Wordle Solver (EN)</NuxtLink>
-              </li>
-              <li>
-                <NuxtLink to="/katla-indonesia-solver"
-                  class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
-                  Katla Indonesia Solver</NuxtLink>
-              </li>
-              <li>
-                <NuxtLink to="/katla-id-solver"
-                  class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-500 dark:hover:text-teal-400 transition-colors cursor-pointer">
-                  Katla Solver</NuxtLink>
               </li>
               <li>
                 <NuxtLink to="/about"
@@ -149,30 +127,16 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const isLoginPage = computed(() => route.path === '/login')
-
 const pageTitle = computed(() => {
-  if (route.path === '/wordle-solver') {
+  if (route.path === '/') {
     return 'Wordle Solver'
-  }
-  if (route.path === '/katla-indonesia-solver') {
-    return 'Katla Indonesia Solver'
-  }
-  if (route.path === '/katla-id-solver') {
-    return 'KatlaID Solver'
   }
   return '5 Letter Word Indo Finder'
 })
 
 const homeLink = computed(() => {
-  if (route.path === '/wordle-solver') {
-    return '/wordle-solver'
-  }
-  if (route.path === '/katla-indonesia-solver') {
-    return '/katla-indonesia-solver'
-  }
-  if (route.path === '/katla-id-solver') {
-    return '/katla-id-solver'
+  if (route.path === '/') {
+    return '/'
   }
   return '/'
 })

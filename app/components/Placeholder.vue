@@ -3,7 +3,7 @@
         <SolverCard>
             <template #action>
                 <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank"
-                    class="flex items-center justify-center gap-2 w-full mb-8 py-3 bg-teal-600 dark:bg-teal-500 text-white hover:bg-teal-700 dark:hover:bg-teal-400 rounded-xl font-bold transition-all text-sm group shadow-lg shadow-teal-500/20 mb-8">
+                    class="flex items-center justify-center gap-2 w-full mb-8 py-3 bg-teal-600 dark:bg-teal-500 text-white hover:bg-teal-700 dark:hover:bg-teal-400 rounded-xl font-bold transition-all text-sm group shadow-lg shadow-teal-500/20">
                     <img src="~/assets/img/wordle-icon.webp" class="w-5 h-5 rounded-sm" alt="Wordle Icon">
                     <span>Play Wordle (NYT)</span>
                     <span class="group-hover:translate-x-1 transition-transform">→</span>
