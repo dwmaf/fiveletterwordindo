@@ -40,4 +40,9 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  nitro: {
+    prerender: {
+      failOnError: false
+    }
+  },
 })
